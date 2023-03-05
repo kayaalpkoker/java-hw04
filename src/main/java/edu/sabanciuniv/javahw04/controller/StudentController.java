@@ -19,20 +19,32 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @PostMapping
     public ResponseEntity<Student> addNewStudent (@RequestBody Student student) {
         return new ResponseEntity<>(studentService.addNewStudent(student), CREATED);
     }
+
     @GetMapping
     public ResponseEntity<List<Student>> findAllStudents() {
         return new ResponseEntity<>(studentService.findAllStudents(), OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Student> findStudentById (@PathVariable Long id) {
         return new ResponseEntity<>(studentService.findStudentById(id), OK);
-
     }
 
+    @PutMapping
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+        return new ResponseEntity<>(studentService.updateStudent(student), OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
+        studentService.deleteStudentById(id);
+        return new ResponseEntity<>(OK);
+    }
 
 
 }
